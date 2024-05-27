@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+    <title>Lista prodotti</title>
+</head>
+<body>
+    <div>
+        <!-- feedback di eliminazione -->
+        <div class="col-3 my-2">
+            <div class="alert alert-info" role="alert" th:if="${deleted != null}"> 
+                Libro eliminato!
+            </div>
+        </div>
+
+        <header class="my-2">
+            <h2>Lista Libri</h2>
+            <!-- pulsante per aggiungere -->
+            <a th:href="@{/libri/nuovo}" class="btn btn-success">Nuovo libro</a>
+        </header>
+
+        <table class="table table-striped table-bordered"> 
+            <thead class="thead-dark"> 
+                <tr>
+                    <th class="col-2">isbn</th>
+                    <th class="col-2">titolo</th>
+                    <th class="col-2">autore</th>
+                    <th class="col-2">genere</th>
+                    <th class="col-2">anno di Pubblicazione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- direttiva strutturale per ciclare -->
+                <tr th:each="l : ${libri}"> 
+                    <td th:text="${l.isbn}"></td>
+                    <td th:text="${l.titolo}"></td>
+                    <td th:text="${l.genere}"></td>
+                    <td th:text="${l.annoPubblicazione}"></td> 
+
+                    <td>
+                        <!-- pulsante di azione -->
+                        <a th:href="@{'/delete/'+${l.isbn}}" class="btn btn-danger">elimina</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <a class="btn btn-primary" th:href="@{/svuota}">Svuota lista libri</a>
+        </div> 
+
+        <small th:if="${#lists.isEmpty(libri)}"> 
+            Nessun libro inserito
+        </small>
+    </div>
+</body>
+</html>
